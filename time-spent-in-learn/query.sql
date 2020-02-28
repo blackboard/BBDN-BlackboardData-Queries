@@ -1,4 +1,3 @@
--- TOKEN:year:number
 select
    lp.last_name,
    lp.first_name,

@@ -11,27 +11,24 @@ The following format for contributes are as follows:
 
 
 
-## Example of SQL File with Tokens
-SQL files can have tokens ({token}) in the query. When retrieving query file, ensure that you check the top of the file for tokens
+## Example of SQL File with Variables
+SQL files can have variables in the query. When retrieving query file, ensure that you check the variables.json file first for any variables to inject into the query:
+
+```py
+
+@app.route('/queries/<query_name>', methods=['GET'])
+@login_required
+def query_by_name(query_name):
+    varibles = requests.get(RAW_VARS_URL.replace('{query_name}', query_name)).json()['variables']
+    query = requests.get(RAW_SQL_URL.replace('{query_name}', query_name)).text
+
+    # ensure that if there are vars, then inject them into the query
+    for key, value in varibles.items():
+        print(key, value)
+        query = query.replace('{' + key + '}', str(value))
+
+    return jsonify({
+        'query': query
+    })
 
 ```
--- TOKEN:tokenName:dataType
-```
-
-Example:
-
-```
--- TOKEN:year:number
-```
-
-In which ever mannor you see fit, enure that you collect all tokens and then replace the tokens with the correct values:
-
-
-```
-    ... sql code
-    and year = {year}
-
-```
-
-
-At this time of writing, it is recomended that you do not put spaces inbetween the token name and that they are to be treated as camelCase and case sensitive. They may be a more defined and offical syntax later but nothing at this point in time. This is releated to: [Issue #244](https://github.com/snowflakedb/snowflake-connector-python/issues/244)
