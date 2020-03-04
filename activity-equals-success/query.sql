@@ -7,7 +7,7 @@ select
   round(avg(clb_duration_sum)/60,0) as avg_collab_minutes,
   round(avg(clb_access_cnt),2) as avg_collab_accesses
 from
-( -- SUMMARIZE COURSE ACTIVITY
+(
     select
         person_course_id,
         course_id,
@@ -22,7 +22,7 @@ from
         person_id
 ) lms
 inner join
-( -- SUMMARIZE COLLABORATE ACTIVITY
+(
     select
         mcr.lms_course_id,
         mp.lms_person_id,
@@ -42,7 +42,7 @@ inner join
     on clb.lms_course_id = lms.course_id
     and clb.lms_person_id = lms.person_id
 inner join
-( -- GET TOTAL COURSE GRADE
+(
   select
       lg.person_course_id as lpc_id,
       lg.normalized_score,
