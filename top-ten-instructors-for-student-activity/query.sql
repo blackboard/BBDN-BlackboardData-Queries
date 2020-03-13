@@ -1,6 +1,3 @@
--- Top 10 instructors based on the activity of students on their courses since a given date - good for best practice examples
-
--- First generate a list of instructors and their activity per course
 with inst as (
 select
   concat(lp.first_name, ' ', lp.last_name) as instructor,
@@ -13,9 +10,9 @@ from cdm_lms.person lp
 inner join cdm_lms.person_course lpc
   on lpc.person_id = lp.id
   and lpc.course_role = 'I'
-inner join cdm_lms.course_activity lca -- inner join to include only instructors with activity in the course
+inner join cdm_lms.course_activity lca
   on lca.person_course_id = lpc.id
-where lca.first_accessed_time >= '2018-09-01'
+where lca.first_accessed_time >= '{first_accessed_time}'
 group by
   lp.first_name,
   lp.last_name,
@@ -23,8 +20,7 @@ group by
   lpc.course_id
 order by instructor, course_id
 )
-  
--- Next generate a list of courses with a summary of student activity
+
 , stu as (  
 select
   lpc.course_id,
@@ -40,12 +36,11 @@ from cdm_lms.person_course as lpc
 left join cdm_lms.course_activity as lca
   on lca.person_course_id = lpc.id
 where lpc.course_role = 'S'
-    and lca.first_accessed_time >= '2018-09-01'
+    and lca.first_accessed_time >= '{first_accessed_time}'
 group by
   lpc.course_id
 ) 
  
--- Then join the two and summarise
 select
   inst.instructor,
   inst.email,
@@ -66,7 +61,4 @@ group by
   inst.email
 order by
   round(avg(stu.avg_student_minutes),0) desc
-limit 10 -- only interested in the top 10
- 
-
-
+limit {limit}

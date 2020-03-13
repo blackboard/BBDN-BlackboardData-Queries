@@ -1,3 +1,6 @@
 {
-    "variables": {}
+    "variables": {
+        "first_accessed_time": "2018-09-01",
+        "limit": 10
+    }
 }

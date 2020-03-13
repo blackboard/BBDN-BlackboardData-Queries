@@ -1,3 +1,5 @@
 {
-    "variables": {}
+    "variables": {
+        "course_roles": "'S'"
+    }
 }

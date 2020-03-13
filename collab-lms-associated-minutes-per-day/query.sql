@@ -11,6 +11,6 @@ inner join cdm_map.course_room mcr
 inner join cdm_lms.course lc
     on lc.id = mcr.lms_course_id
 Where
-    ca.first_join_time >= dateadd(month,-1,current_date()) -- limit to last month
+    ca.first_join_time >= dateadd(month,-1,current_date())
 group by date
 order by date

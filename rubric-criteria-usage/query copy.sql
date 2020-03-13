@@ -16,5 +16,14 @@ left join cdm_lms.term lt
 left join cdm_lms.person_course lpc
     on lpc.id = le.person_course_id
     and lpc.course_id = lc.id
-where lei.type = 'RUBRIC_CRITERIA'
+where /* --UNCOMMENT TO FILTER BY TERM AND/OR START DATE
+    (
+    lt.name = 'Fall 2018'
+    or (
+        lc.start_date > '2018-08-31'
+        and lc.start_date < '2018-12-31'
+      )
+    )
+and */
+lei.type = 'RUBRIC_CRITERIA'
 group by lei.name

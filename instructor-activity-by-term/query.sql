@@ -1,5 +1,3 @@
--- Summary of Instructor activity in courses per term
-
 select
     lt.name as term,
     count(distinct lca.person_id) as distinct_users,
@@ -20,4 +18,4 @@ inner join cdm_lms.person_course lpc
     on lpc.id = lca.person_course_id
     and lpc.course_role = 'I'
 group by term
-having term like '%2019%'
+having term like '%{term}%'
