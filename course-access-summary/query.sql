@@ -11,7 +11,7 @@ from cdm_lms.person_course lpc
 left join cdm_lms.course_activity lca
     on lpc.id = lca.person_course_id
 where 
-    lpc.course_role = 'S'
+    lpc.course_role in ({course_roles})
     and lpc.available_ind = 1
 group by 
     lpc.course_id

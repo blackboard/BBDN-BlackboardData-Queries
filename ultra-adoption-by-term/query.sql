@@ -7,7 +7,7 @@ select
 from cdm_lms.course lc
 inner join cdm_lms.term lt
     on lt.id = lc.term_id
-where lt.start_date > '{date}' -- change or remove as appropriate
+where lt.start_date > '{date}'
 group by 
     lt.start_date,
     lt.name
