@@ -1,7 +1,3 @@
-/* Course Access Summary for Sarah Hargreaves - York College UK */
-
--- first summarise all course activity per course
-
 with access as (
 select
     lpc.course_id,
@@ -11,17 +7,15 @@ select
     count(distinct lpc.person_id) as enrolled_users,
     count(distinct lca.person_id) as active_users,
     round(total_minutes / active_users,0) as avg_minutes
-from cdm_lms.person_course lpc --using person_course for enrolments and to filter for students only
-left join cdm_lms.course_activity lca -- left join to activity to include inactive courses
+from cdm_lms.person_course lpc
+left join cdm_lms.course_activity lca
     on lpc.id = lca.person_course_id
 where 
-    lpc.course_role = 'S' -- student
+    lpc.course_role = 'S'
     and lpc.available_ind = 1
 group by 
     lpc.course_id
 )
-
--- Now list all availavble courses and add activity summary
 
 select
     lc.name as course,
