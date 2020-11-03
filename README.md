@@ -16,8 +16,6 @@ SQL files can have variables in the query. When retrieving query file, ensure th
 
 ```py
 
-@app.route('/queries/<query_name>', methods=['GET'])
-@login_required
 def query_by_name(query_name):
     varibles = requests.get(RAW_VARS_URL.replace('{query_name}', query_name)).json()['variables']
     query = requests.get(RAW_SQL_URL.replace('{query_name}', query_name)).text
