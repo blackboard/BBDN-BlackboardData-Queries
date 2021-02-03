@@ -1,6 +1,6 @@
 # BBDN-BlackboardData-Queries
 
-The following format for contributes are as follows:
+The format for contributions is as follows:
 
 ## Example: Get User By User Id
 /get-user-by-user-id
@@ -50,11 +50,11 @@ In order to call this programatically, you would use something similar to this e
 ```py
 
 def query_by_name(query_name):
-    varibles = requests.get(RAW_VARS_URL.replace('{query_name}', query_name)).json()['variables']
+    variables = requests.get(RAW_VARS_URL.replace('{query_name}', query_name)).json()['variables']
     query = requests.get(RAW_SQL_URL.replace('{query_name}', query_name)).text
 
     # ensure that if there are vars, then inject them into the query
-    for key, value in varibles.items():
+    for key, value in variables.items():
         print(key, value)
         query = query.replace('{' + key + '}', str(value))
 
