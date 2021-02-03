@@ -40,7 +40,7 @@ left join ( -- building a summary of submissions
     group by person_course_id
     )ls
     on ls.person_course_id = lpc.id
-left join ( - getting the total grade
+left join ( -- getting the total grade
     select
         person_course_id,
         normalized_score as total_grade
@@ -52,5 +52,5 @@ left join ( - getting the total grade
         ) gr
     on gr.person_course_id = lpc.id
 where
-    lp.source_id = {userpk}
-    and lc.course_number = '{coursepk}'
+    lp.source_id = {userpk} -- Add userpk if you need to filter by a single student
+    and lc.course_number = '{coursepk}' -- Add coursepk if you need to filter by a single course
