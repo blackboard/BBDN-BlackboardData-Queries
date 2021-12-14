@@ -11,6 +11,7 @@ Details on the columns in this table can be found below:
 --course_name: Name of the course
 --tool_name: Name of the tool
 --person_course_role: Name of the role of a person in the course
+--course_role_desc:  Description of the role of a person in the course
 --course_available_ind: Shows if the course is available
 --tool_available_ind: Shows if the tool is available in the course
 --person_available_ind: Shows if the person is available
@@ -60,6 +61,7 @@ select
 	c.name as course_name,
 	t.name as tool_name,
 	nvl (pc.course_role_source_desc, 'Unknown') as person_course_role,
+	nvl (pc.course_role_desc,'Unknown') as course_role_desc,
 	nvl(c.available_ind, 0) as course_available_ind,
 	nvl(ct.available_ind,0) as tool_available_ind,
 	p.available_ind as person_available_ind,
