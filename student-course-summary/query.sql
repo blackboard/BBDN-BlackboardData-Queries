@@ -12,7 +12,7 @@ select
     lca.last_course_access,
     round(zeroifnull(ls.submission_count),0) as submission_count,
     ls.last_submission,
-    round(zeroifnull(gr.total_grade),0) as  total_grade
+    round(zeroifnull(gr.total_grade),2) as  total_grade
 from cdm_lms.person lp -- for Course attributes
 inner join cdm_lms.person_course lpc -- for User-Course mapping
     on lpc.person_id = lp.id
