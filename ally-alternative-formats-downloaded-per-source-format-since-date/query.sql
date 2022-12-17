@@ -7,7 +7,7 @@ select
 from cdm_tlm.ally_events tae
 where
     tae.event_type = 'COMPLETE_DOWNLOAD_ALTERNATIVE_FORMAT'
-    and tae.event_date >= {event_date}
+    and tae.event_time >= {event_date}
 group by 
     source_format,
     target_format
