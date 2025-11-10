@@ -31,10 +31,10 @@ left join cdm_lms.course lc
 left join cdm_lms.course_item lci
     on concat('_',split_part(lci.source_id,'COURSE_CONTENTS;',2),'_1') = ue.data:interactionContext:content:id::string
     or concat('_',split_part(lci.source_id,'FORUM_MAIN;',2),'_1') = ue.data:interactionContext:content:id::string
-where -- HIGHLY GRANULAR DATA - FILTERING IS ESSENTIAL
+where -- HIGHLY GRANULAR DATA - **FILTERING IS ESSENTIAL**
     -- event_time::date = '2025-04-01' and -- UNCOMMENT AND INSERT DATE HERE IF NEEDED
     url like '%courses/_722_1%' and -- INSERT COURSE PK1 BETWEEN UNDERSCORES
-    object_id ilike '%CREATE%' -- OTHER OPTIONS: SAVE (changes), VISIBLE, DRAG (move), CREATE
+    object_id ilike '%DELETE%' -- OPTIONS: DELETE, SAVE (changes), VISIBLE, DRAG (move), CREATE
 order by event_time desc 
 LIMIT 1000; -- ROW LIMIT RECOMMENDED BUT IN ADDITION TO FILTERING IN 'WHERE' CLAUSE
 
