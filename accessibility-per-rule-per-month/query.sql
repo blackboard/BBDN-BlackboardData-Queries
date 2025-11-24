@@ -49,4 +49,5 @@ with rule_month_score as (
 
 -- select * from rule_month_score order by rule, month_start desc;
 
+/***** Ignore everything below this line *****/
 select 'Uncomment a line above and run the query again to see results' as oops
