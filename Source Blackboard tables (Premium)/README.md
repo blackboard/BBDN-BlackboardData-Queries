@@ -1,0 +1,1 @@
+The queries contained in this folder can be used by customers with a Premium license to query the raw Blackboard Learn tables in Illuminate.
