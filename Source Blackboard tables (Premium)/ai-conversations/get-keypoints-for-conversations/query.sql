@@ -66,7 +66,6 @@ SELECT
         ELSE NULL
     END AS attempt_status,
     gm.title as conversation_title,
-    --gm.formative_ind,
     u.pk1 AS user_pk1,
     cm.pk1 AS course_main_pk1,
     a.pk1 AS attempt_pk1,

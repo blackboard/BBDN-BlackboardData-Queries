@@ -1,4 +1,3 @@
--- get Assessment questions
 WITH assessment_questions AS (
     SELECT
         qad.pk1 as main_pk1,

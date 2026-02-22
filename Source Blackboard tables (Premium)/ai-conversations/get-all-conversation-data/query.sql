@@ -17,6 +17,7 @@ WITH conversation_data AS (
         END AS msg_timestamp,
         qad.description,
         REGEXP_REPLACE(raw_message, '^[^,]+,[^,]+,[^,]+,[^,]+,', '') AS conversation_message,
+        qad.ai_state,
         qrd_assess.pk1 AS qrd_assess_pk1,
         qad.crsmain_pk1 AS qad_crsmain_pk1,
         qad.pk1 AS qad_pk1,
@@ -41,6 +42,7 @@ WITH conversation_data AS (
 SELECT    
     cm.course_id,
     cd.msg_timestamp,
+    cd.chat_question_type,
     cd.message_source,
     cd.conversation_message,
     cd.bot_name,
@@ -49,7 +51,6 @@ SELECT
     u.user_id AS user_id,
     u.student_id AS student_id,
     cd.bot_role,
-    cd.chat_question_type,
     cd.description,
     cm.course_name,
     a.score,
@@ -67,6 +68,7 @@ SELECT
     gm.title as conversation_title,
     a.student_comments,
     a.instructor_comments,
+    cd.ai_state as is_question_generated_by_ai,
     u.pk1 AS user_pk1,
     cm.pk1 AS course_main_pk1,
     a.pk1 AS attempt_pk1,
@@ -88,3 +90,4 @@ FROM conversation_data cd
         ON u.pk1 = cu.users_pk1
 WHERE (CONTAINS(cd.raw_message, 'Bot,') OR CONTAINS(cd.raw_message, 'Student,'))
 ORDER BY cd.qad_pk1, cd.qrd_pk1, cd.response_order
+;
