@@ -148,7 +148,7 @@ Counts how many AI conversation assessments exist in each course.
 ### [number-of-questions-per-user](number-of-questions-per-user/query.sql)
 Counts how many messages each student sent in their AI conversations for a specific course.
 
-**Returns**: Student information with count of messages sent (engagement metric).
+**Returns**: Student information with count of messages sent.
 
 **Parameters**: Requires `{coursepk}` to be set to a specific course primary key.
 
@@ -156,10 +156,23 @@ Counts how many messages each student sent in their AI conversations for a speci
 
 ---
 
+### [join-learn-ai-data-to-cdm-lms](join-learn-ai-data-to-cdm-lms/query.sql)
+Demonstrates how to join AI conversation data from the LEARN schema to the CDM_LMS schema.
+
+**Returns**: AI conversation questions with chat type, title, description, and full course details from the CDM_LMS.COURSE table.
+
+**Key Feature**: Shows the pattern for joining raw LEARN tables to CDM_LMS tables using `source_id` as the join key (e.g., `CDM_LMS.COURSE.source_id = LEARN.QTI_ASI_DATA.crsmain_pk1`).
+
+**Use Case**: Enriching AI conversation data with standardized course information from the Canonical Data Model, integrating LEARN and CDM_LMS data sources.
+
+---
+
+
+
 ## Common Patterns
 
 ### Working with XML Data
-Most queries use Snowflake's XML functions:
+Most queries used to pull out AI conversation data will need to parse XML using Snowflake's XML functions:
 ```sql
 TRY_CAST(PARSE_XML(IFF(CHECK_XML(data) IS NULL, data, NULL)) AS VARIANT)
 XMLGET(xml_obj, 'element_name'):"$"::STRING
