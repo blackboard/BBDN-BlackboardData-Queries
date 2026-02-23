@@ -1,6 +1,8 @@
 # AI Conversations Data Structure
 
-This folder contains queries for extracting and analyzing AI conversation data from Blackboard Learn. AI Conversations (also known as AI Chat questions) are interactive assessments where students engage with AI-powered chatbots configured with specific roles and personas.
+This folder contains queries for extracting and analyzing AI conversation data from Blackboard Learn. AI Conversations are activities where students engage with AI-powered chatbots configured with specific roles and personas.
+
+> **⚠️ IMPORTANT:** Snowflake has a limit on the size of column data. Conversation data can exceed this limit, causing long conversations to be truncated. All queries in this folder are designed to handle truncated data gracefully without breaking.
 
 ## Overview
 
@@ -16,7 +18,7 @@ QTI_ASI_DATA (Assessment/Question Definition)
 │   
 QTI_RESULT_DATA (Student Responses)
 ├── Assessment Results
-│   ├── Section Results  
+│   ├── Section Results
 │   │   └── Question Results (contains conversation messages)
 ```
 
@@ -73,26 +75,8 @@ Conversation messages in `QTI_RESULT_DATA` are stored as CSV-like strings:
 
 The queries in this folder serve as an example of querying AI Conversation data.
 
-### [get-all-conversation-data](get-all-conversation-data/query.sql)
-Returns the complete conversation history between students and AI bots, including all messages exchanged.
-
-**Returns**: Individual conversation messages with timestamps, student information, bot configuration, grades, and attempt status. Filters for actual `Student` and `Bot` messages only.
-
-**Use Case**: Analyzing conversation patterns, reviewing student-bot interactions, extracting conversation transcripts.
-
----
-
-### [get-all-ai-assessments](get-all-ai-assessments/query.sql)
-Retrieves all AI conversation assessments with their hierarchical structure (assessment → section → question).
-
-**Returns**: Assessment metadata including section details, question information, conversation messages, bot configuration, and organizational structure.
-
-**Use Case**: Understanding the full structure of AI assessments, analyzing how assessments are organized.
-
----
-
 ### [get-ai-assessment-questions](get-ai-assessment-questions/query.sql)
-Extracts the actual question prompts/text from AI conversation assessments.
+Extracts the actual question prompts/text from AI conversation assessments. You could build upon the query by using this as a CTE (Common Table Expressions) in other queries.
 
 **Returns**: The formatted question text that students see when starting an AI conversation, linked to assessment and section identifiers.
 
@@ -105,7 +89,25 @@ Retrieves student reflection responses that may be included after AI conversatio
 
 **Returns**: Student-written reflection text from questions that include a reflection component (contains `<formatted_text>` in responses).
 
-**Use Case**: Analyzing student reflections on their AI interactions, assessing metacognitive responses.
+**Use Case**: Analyzing student reflections on their AI interactions and gathering feedback regarding AI interactions.
+
+---
+
+### [get-all-ai-assessments](get-all-ai-assessments/query.sql)
+Retrieves all AI conversation assessments with their hierarchical structure (assessment → section → question).
+
+**Returns**: Assessment metadata including section details, question information, conversation messages, bot configuration, and organizational structure.
+
+**Use Case**: Understanding the full structure of AI assessments, analyzing how assessments are organized.
+
+---
+
+### [get-all-conversation-data](get-all-conversation-data/query.sql)
+Returns the complete conversation history between all students and AI bots, including all messages exchanged.
+
+**Returns**: Individual conversation messages with timestamps, student information, bot configuration, grades, and attempt status. Filters for actual `Student` and `Bot` messages only.
+
+**Use Case**: Analyzing conversation patterns, reviewing student-bot interactions, extracting conversation transcripts.
 
 ---
 
@@ -157,7 +159,7 @@ Counts how many messages each student sent in their AI conversations for a speci
 ---
 
 ### [join-learn-ai-data-to-cdm-lms](join-learn-ai-data-to-cdm-lms/query.sql)
-Demonstrates how to join AI conversation data from the LEARN schema to the CDM_LMS schema.
+Demonstrates how to join AI conversation data from the LEARN schema to the CDM_LMS (Canonical Data Model) schema.
 
 **Returns**: AI conversation questions with chat type, title, description, and full course details from the CDM_LMS.COURSE table.
 
@@ -166,8 +168,6 @@ Demonstrates how to join AI conversation data from the LEARN schema to the CDM_L
 **Use Case**: Enriching AI conversation data with standardized course information from the Canonical Data Model, integrating LEARN and CDM_LMS data sources.
 
 ---
-
-
 
 ## Common Patterns
 

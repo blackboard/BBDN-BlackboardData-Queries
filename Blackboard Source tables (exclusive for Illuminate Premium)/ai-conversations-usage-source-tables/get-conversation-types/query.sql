@@ -5,9 +5,9 @@ SELECT
     qad.title,
     qad.description,
     qad.row_inserted_time,
-    qad.ai_state as is_ai_generated,
-    qad.data as question_data,
-    qrd.data as conversation_data,
+    qad.ai_state AS is_ai_generated,
+    qad.data AS question_data,
+    qrd.data AS conversation_data,
     c.* -- All CDM_LMS.COURSE data
 FROM LEARN.QTI_ASI_DATA qad
     LEFT JOIN LEARN.QTI_RESULT_DATA qrd
@@ -15,4 +15,5 @@ FROM LEARN.QTI_ASI_DATA qad
     LEFT JOIN CDM_LMS.COURSE c
         ON c.source_id = qad.crsmain_pk1
 WHERE qad.bbmd_questiontype = 21
-ORDER BY qad.pk1;
+ORDER BY qad.pk1
+;

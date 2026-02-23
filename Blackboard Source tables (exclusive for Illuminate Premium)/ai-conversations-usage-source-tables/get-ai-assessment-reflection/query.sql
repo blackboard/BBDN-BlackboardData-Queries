@@ -1,6 +1,6 @@
 SELECT 
     r.index AS response_order,
-    r.value:"$":"$" as response_message,
+    r.value:"$":"$" AS response_message,
     qad.pk1 AS qad_pk1,
     qrd.pk1 AS qrd_pk1
 FROM LEARN.QTI_ASI_DATA qad
@@ -16,10 +16,10 @@ LATERAL FLATTEN(
 ,LATERAL FLATTEN(
     input => f.value:"$"
 ) r
-    WHERE 
-        STARTSWITH(r.value, '<response_value') AND
-        qad.bbmd_assessment_subtype = 'AiConversation' AND
-        CONTAINS(IFF(CONTAINS(r.value, '<response_value'), r.value:"$", NULL), '<formatted_text')
-    ORDER BY 
-        qad_pk1, qrd_pk1, response_order
+WHERE
+    STARTSWITH(r.value, '<response_value') AND
+    qad.bbmd_assessment_subtype = 'AiConversation' AND
+    CONTAINS(IFF(CONTAINS(r.value, '<response_value'), r.value:"$", NULL), '<formatted_text')
+ORDER BY 
+    qad_pk1, qrd_pk1, response_order
 ;

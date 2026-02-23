@@ -13,15 +13,15 @@ SELECT
     qad.pk1 AS qad_pk1,
     qrd.pk1 AS qrd_pk1,
     qad.bbmd_questiontype,
-    qad.ai_state as is_assessment_ai_generated,
-    section_qad.bbmd_sectiontype as section_type,
-    section_qad.title as section_title,
-    section_qad.description as section_desciption,
-    section_qad.position as section_postition,
-    assess_qad.bbmd_questiontype as question_type,
-    assess_qad.title as assess_title,
-    assess_qad.description as assess_description,
-    assess_qad.position as assess_position
+    qad.ai_state AS is_assessment_ai_generated,
+    section_qad.bbmd_sectiontype AS section_type,
+    section_qad.title AS section_title,
+    section_qad.description AS section_description,
+    section_qad.position AS section_position,
+    assess_qad.bbmd_questiontype AS question_type,
+    assess_qad.title AS assess_title,
+    assess_qad.description AS assess_description,
+    assess_qad.position AS assess_position
 FROM LEARN.QTI_ASI_DATA qad
     LEFT JOIN LEARN.QTI_ASI_DATA section_qad
         ON section_qad.parent_pk1 = qad.pk1
@@ -35,10 +35,10 @@ LATERAL FLATTEN(
 ,LATERAL FLATTEN(
     input => f.value:"$"
 ) r
-    WHERE 
-        STARTSWITH(r.value, '<response_value') AND
-        qad.bbmd_assessment_subtype = 'AiConversation' AND
-        (CONTAINS(raw_message, 'Bot,') OR CONTAINS(raw_message, 'Student,'))
-    ORDER BY 
-        qad_pk1, qrd_pk1, response_order
+WHERE 
+    STARTSWITH(r.value, '<response_value') AND
+    qad.bbmd_assessment_subtype = 'AiConversation' AND
+    (CONTAINS(raw_message, 'Bot,') OR CONTAINS(raw_message, 'Student,'))
+ORDER BY 
+    qad_pk1, qrd_pk1, response_order
 ;

@@ -1,7 +1,12 @@
+-- NOTE: you will need to replace {coursepk} with the actual course pk1 value to
+-- get results for a specific course, or remove the filter to get results for
+-- all courses.
+
 SELECT
     qad_item.pk1,
+    qrd_assess.pk1,
     qad_item.crsmain_pk1,
-    u.student_id,
+    u.user_id,
     u.firstname,
     u.lastname,
     REGEXP_COUNT(qrd_item.data, '>Student,') AS student_message_count
@@ -16,12 +21,11 @@ LEFT JOIN LEARN.ATTEMPT a
     ON a.qti_result_data_pk1 = qrd_assess.pk1
 LEFT JOIN LEARN.GRADEBOOK_GRADE gg
     ON gg.pk1 = a.gradebook_grade_pk1
-LEFT JOIN LEARN.COURSE_USERS cu 
+LEFT JOIN LEARN.COURSE_USERS cu
     ON cu.pk1 = gg.course_users_pk1
 LEFT JOIN LEARN.USERS u
     ON u.pk1 = cu.users_pk1
 WHERE qad_item.bbmd_questiontype = 21
     AND qad_item.crsmain_pk1 = {coursepk}
-    AND qrd_item.pk1 is not null 
-ORDER BY qad_item.crsmain_pk1, u.student_id
-;
+    AND qrd_item.pk1 is not null
+ORDER BY qad_item.crsmain_pk1, u.user_id
