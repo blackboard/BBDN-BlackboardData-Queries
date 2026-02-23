@@ -172,7 +172,7 @@ Demonstrates how to join AI conversation data from the LEARN schema to the CDM_L
 ## Common Patterns
 
 ### Working with XML Data
-Most queries used to pull out AI conversation data will need to parse XML using Snowflake's XML functions:
+Most queries used to pull out AI conversation data will need to parse XML using Snowflake's XML functions. Conversation data can exceed the Snowflake column limits, causing XML data to be cut off and malformed. As a result, queries need to validate that the XML is not malformed before attempting to parse it:
 ```sql
 TRY_CAST(PARSE_XML(IFF(CHECK_XML(data) IS NULL, data, NULL)) AS VARIANT)
 XMLGET(xml_obj, 'element_name'):"$"::STRING
