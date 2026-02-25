@@ -71,7 +71,6 @@ SELECT
         WHEN gm.formative_ind = 2 THEN 'Assessment is formative and the formative label is visible to students'
         ELSE NULL
     END AS formative_status,
-    gm.formative_ind,
     gm.title AS conversation_title,
     a.student_comments,
     a.instructor_comments,
