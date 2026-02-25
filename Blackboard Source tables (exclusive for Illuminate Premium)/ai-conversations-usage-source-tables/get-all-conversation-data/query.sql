@@ -65,6 +65,13 @@ SELECT
         WHEN a.status = 9 THEN 'NEEDS_MORE_GRADING'
         ELSE NULL
     END AS attempt_status,
+    CASE
+        WHEN gm.formative_ind = 0 THEN 'Assessment is not formative'
+        WHEN gm.formative_ind = 1 THEN 'Assessment is formative and the formative label is not visible to students'
+        WHEN gm.formative_ind = 2 THEN 'Assessment is formative and the formative label is visible to students'
+        ELSE NULL
+    END AS formative_status,
+    gm.formative_ind,
     gm.title AS conversation_title,
     a.student_comments,
     a.instructor_comments,
